@@ -62,13 +62,8 @@
               Crea tu cuenta completando tus datos. Luego actívala ingresando el
               código SMS que te enviaremos a tu celular.
             </p>
-            <CButton
-               color="primary"
-               class="active mt-3"
-               to="/register" 
-               exact
-            >
-               Regístrate Ahora {{ username }} !
+            <CButton color="primary" class="active mt-3" to="/register" exact>
+              Regístrate Ahora {{ username }} !
             </CButton>
           </CCard>
         </CCardGroup>
@@ -78,35 +73,33 @@
 </template>
 
 <script>
-
 export default {
-  name: 'Login',
-  data: function () {
+  name: "Login",
+  data: function() {
     return {
-      username:'davidtataje@gmail.com',
-      password:'1234'
-    }
+      username: "davidtataje@gmail.com",
+      password: "1234"
+    };
   },
-  methods:{
-    login () {
+  methods: {
+    login() {
       let self = this;
-      self.$store.state.services.authService.login(this.username,this.password).
-      then(function (response) {
-        console.log(response)
-        if(response.status === 200 && response.data.success === true)
-        {
-          self.$store.state.services.authService.getUser()
-          .then(function (response) {
-            self.$router.push({ name: 'Home'})
-          })
-          .catch(function (error){ console.log(error)});
-        }
-
-      }).catch(function (error) {
-        console.log(error)
-        self.$router.push('/')
-      });
+      self.$store.state.services.authService
+        .login(this.username, this.password)
+        .then(function(response) {
+          if (response.status === 200 && response.data.success === true) {
+            self.$store.state.services.authService
+              .getUser()
+              .then(function() {
+                self.$router.push({ name: "Home" });
+              })
+              .catch(function() {});
+          }
+        })
+        .catch(function() {
+          self.$router.push("/");
+        });
     }
   }
-}
+};
 </script>
