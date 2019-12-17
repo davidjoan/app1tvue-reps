@@ -351,27 +351,14 @@ const routes = [
       }
     ]
   }
-
-/* {
-    path: "/",
-    name: "home",
-    component: Home
-  },
-  {
-    path: "/about",
-    name: "about",
-    component: () => import("../views/About.vue")
-  }*/
-
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: "hash",
   base: process.env.BASE_URL,
-  mode: `hash`, // https://router.vuejs.org/api/#mode
   linkActiveClass: `active`,
   scrollBehavior: () => ({ y: 0 }),
-  routes,
+  routes
 });
 
 export default router;
