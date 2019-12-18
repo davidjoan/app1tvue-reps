@@ -8,8 +8,8 @@
     <template #toggler>
       <CHeaderNavLink>
         <div class="c-avatar">
-          <img v-bind:src="'img/avatars/' + $store.state.user.id + '.jpg'"
-            class="c-avatar-img "
+          <img v-bind:src="'images/avatars/' + $store.state.auth.user.id + '.jpg'"
+            class="c-avatar-img"
           />
         </div>
       </CHeaderNavLink>
@@ -55,16 +55,18 @@
       <CBadge color="primary" class="ml-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem>
     <CDropdownDivider/>
-    <CDropdownItem>
+    <CDropdownItem v-on:click="getOrganization">
       <CIcon name="cil-shield-alt" /> Bloquear cuenta
     </CDropdownItem>
-    <CDropdownItem v-on:click="logout" >
+    <CDropdownItem v-on:click="logoutUser" >
       <CIcon name="cil-lock-locked" /> Cerrar Sesión
     </CDropdownItem>
   </CDropdown>
 </template>
 
 <script>
+import Vuex from "vuex";
+
 export default {
   name: 'TheHeaderDropdownAccnt',
   data () {
@@ -73,11 +75,7 @@ export default {
     }
   },
   methods:{
-    logout () {
-      let self = this;
-      self.$store.state.services.authService.logout();
-      self.$router.push({ name: 'Login'})      
-    }
+    ...Vuex.mapActions(['logoutUser','getOrganization']),
   }
   
 }

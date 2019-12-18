@@ -1,11 +1,11 @@
 import Axios from 'axios'
-import authService from '../services/AuthService'
+import AuthService from '../services/AuthService'
+import OrganizationService from '../services/OrganizationService';
 
 // Axios Configuration
 Axios.defaults.headers.common.Accept = 'application/json'
-Axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'https://app1tpe.herokuapp.com';
 Axios.defaults.withCredentials = true;
 
 export default {
-    authService: new authService(Axios)
+    organizationService: new OrganizationService(Axios)
 }

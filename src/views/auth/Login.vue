@@ -6,8 +6,8 @@
           <CCard class="p-4">
             <CCardBody>
               <CForm>
-                <CAlert show color="success" v-if="$store.state.auth_message">
-                  {{ $store.state.auth_message }}
+                <CAlert show color="success" v-if="auth_message">
+                  {{ auth_message }}
                 </CAlert>
                 <h1>Login App1t</h1>
                 <p class="text-muted">Ingresa con tu cuenta</p>
@@ -32,7 +32,7 @@
                 </CInput>
                 <CRow>
                   <CCol col="6">
-                    <CButton color="primary" class="px-3" v-on:click="login">
+                    <CButton color="primary" class="px-3" v-on:click="loginUser($data)">
                       Iniciar Sesión
                     </CButton>
                   </CCol>
@@ -73,33 +73,21 @@
 </template>
 
 <script>
+import Vuex from "vuex";
+
 export default {
   name: "Login",
-  data: function() {
+  data: function(){
     return {
       username: "davidtataje@gmail.com",
       password: "1234"
-    };
+    }
+  },
+  computed: {
+    ...Vuex.mapState(['user', 'auth_message'])
   },
   methods: {
-    login() {
-      let self = this;
-      self.$store.state.services.authService
-        .login(this.username, this.password)
-        .then(function(response) {
-          if (response.status === 200 && response.data.success === true) {
-            self.$store.state.services.authService
-              .getUser()
-              .then(function() {
-                self.$router.push({ name: "Home" });
-              })
-              .catch(function() {});
-          }
-        })
-        .catch(function() {
-          self.$router.push("/");
-        });
-    }
+    ...Vuex.mapActions(['loginUser'])
   }
 };
 </script>

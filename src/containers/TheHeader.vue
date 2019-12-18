@@ -12,7 +12,7 @@
     />
     <CHeaderBrand
       class="mx-auto d-lg-none" 
-      src="img/brand/coreui-base.svg"
+      src="/images/brand/coreui-base.svg"
       width="97"
       height="46"
       alt="CoreUI Logo"
