@@ -8,7 +8,7 @@
     <template #toggler>
       <CHeaderNavLink>
         <div class="c-avatar">
-          <img v-bind:src="'images/avatars/' + $store.state.auth.user.id + '.jpg'"
+          <img v-bind:src="'images/avatars/' + user.id + '.jpg'"
             class="c-avatar-img"
           />
         </div>
@@ -40,9 +40,11 @@
     >
       <strong>Ajustes</strong>
     </CDropdownHeader>
-    <CDropdownItem>
-      <CIcon name="cil-user" /> Perfil
+    
+    <CDropdownItem v-for="organization in organizations" :key="organization.id">
+      <CIcon name="cil-user" /> Perfil {{ organization.name }}
     </CDropdownItem>
+    
     <CDropdownItem>
       <CIcon name="cil-settings" /> Configuraciones
     </CDropdownItem>
@@ -55,7 +57,7 @@
       <CBadge color="primary" class="ml-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem>
     <CDropdownDivider/>
-    <CDropdownItem v-on:click="getOrganization">
+    <CDropdownItem>
       <CIcon name="cil-shield-alt" /> Bloquear cuenta
     </CDropdownItem>
     <CDropdownItem v-on:click="logoutUser" >
@@ -65,7 +67,7 @@
 </template>
 
 <script>
-import Vuex from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: 'TheHeaderDropdownAccnt',
@@ -74,10 +76,13 @@ export default {
       itemsCount: 42
     }
   },
+  computed: {
+    ...mapState('auth',['user']),
+    ...mapState('organization',['organizations'])
+  },
   methods:{
-    ...Vuex.mapActions(['logoutUser','getOrganization']),
+    ...mapActions('auth',['logoutUser']),
   }
-  
 }
 </script>
 

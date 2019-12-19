@@ -32,7 +32,11 @@
                 </CInput>
                 <CRow>
                   <CCol col="6">
-                    <CButton color="primary" class="px-3" v-on:click="loginUser($data)">
+                    <CButton
+                      color="primary"
+                      class="px-3"
+                      v-on:click="loginUser($data)"
+                    >
                       Iniciar Sesión
                     </CButton>
                   </CCol>
@@ -73,21 +77,21 @@
 </template>
 
 <script>
-import Vuex from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Login",
-  data: function(){
+  data: function() {
     return {
       username: "davidtataje@gmail.com",
       password: "1234"
-    }
+    };
   },
   computed: {
-    ...Vuex.mapState(['user', 'auth_message'])
+    ...mapState({ user: "auth/user", auth_message: "auth/auth_message" })
   },
   methods: {
-    ...Vuex.mapActions(['loginUser'])
+    ...mapActions({ loginUser: "auth/loginUser" })
   }
 };
 </script>

@@ -2,6 +2,7 @@ import axios from "axios";
 import router from "../router";
 
 const moduleAuth = {
+  namespaced: true,
   state: {
     user: {},
     token: "",
@@ -29,17 +30,18 @@ const moduleAuth = {
   },
   actions: {
     async getUser({ commit }) {
-      const user = await axios.get(
-        `${process.env.VUE_APP_API_URL}/api/v1/getUser`
-      );
-      commit("setUser", await user.data.data);
+      await axios
+        .get(`${process.env.VUE_APP_API_URL}/api/v1/getUser`)
+        .then(function(response) {
+          commit("setUser", response.data.data);
+          return response;
+        });
     },
     logoutUser({ commit }) {
       commit("logout");
       router.push({ name: "Login" });
     },
     async loginUser({ commit, dispatch }, payload) {
-      console.log(payload);
       return axios
         .post(`${process.env.VUE_APP_API_URL}/api/v1/login`, {
           email: payload.username,
@@ -51,11 +53,13 @@ const moduleAuth = {
             const message = response.data.message;
             axios.defaults.headers.common["Authorization"] = "Bearer " + token;
             commit("authenticated", { token, message });
-            dispatch("getUser")
-              .then(function() {
-                router.push({ name: "Home" });
-              })
-              .catch(function() {});
+            dispatch("getUser").then(function() {
+              dispatch("organization/getOrganization", {}, { root: true }).then(
+                function() {
+                  router.push({ name: "Home" });
+                }
+              );
+            });
           }
         })
         .catch(function() {

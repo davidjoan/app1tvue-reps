@@ -1,5 +1,9 @@
 <template>
   <div>
+
+
+    
+
     <WidgetsDropdown/>
     <CCard>
       <CCardBody>
@@ -29,6 +33,14 @@
         <MainChartExample style="height:300px;margin-top:40px;"/>
       </CCardBody>
       <CCardFooter>
+        <CRow class="text-center">
+          TEST VUE
+          <ul>
+          <li v-for="organization in organizations" :key="organization.id">
+            Perfil {{ organization.name }}
+          </li>
+          </ul>
+        </CRow>
         <CRow class="text-center">
           <CCol md sm="12" class="mb-sm-2 mb-0">
             <div class="text-muted">Visits</div>
@@ -457,6 +469,7 @@
 import MainChartExample from './charts/MainChartExample'
 import WidgetsDropdown from './widgets/WidgetsDropdown'
 import WidgetsBrand from './widgets/WidgetsBrand'
+import { mapState } from "vuex";
 
 export default {
   name: 'Dashboard',
@@ -465,12 +478,15 @@ export default {
     WidgetsDropdown,
     WidgetsBrand
   },
+  computed: {
+    ...mapState('organization',['organizations'])
+  },
   data () {
     return {
       selected: 'Month',
       tableItems: [
         {
-          avatar: { url: 'img/avatars/1.jpg', status: 'success' },
+          avatar: { url: 'images/avatars/1.jpg', status: 'success' },
           user: { name: 'Yiorgos Avraamu', new: true, registered: 'Jan 1, 2015' },
           country: { name: 'USA', flag: 'cif-us' },
           usage: { value: 50, period: 'Jun 11, 2015 - Jul 10, 2015' },
@@ -478,7 +494,7 @@ export default {
           activity: '10 sec ago'
         },
         {
-          avatar: { url: 'img/avatars/2.jpg', status: 'danger' },
+          avatar: { url: 'images/avatars/2.jpg', status: 'danger' },
           user: { name: 'Avram Tarasios', new: false, registered: 'Jan 1, 2015' },
           country: { name: 'Brazil', flag: 'cif-br' },
           usage: { value: 22, period: 'Jun 11, 2015 - Jul 10, 2015' },
@@ -486,7 +502,7 @@ export default {
           activity: '5 minutes ago'
         },
         {
-          avatar: { url: 'img/avatars/3.jpg', status: 'warning' },
+          avatar: { url: 'images/avatars/3.jpg', status: 'warning' },
           user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2015' },
           country: { name: 'India', flag: 'cif-in' },
           usage: { value: 74, period: 'Jun 11, 2015 - Jul 10, 2015' },
@@ -494,7 +510,7 @@ export default {
           activity: '1 hour ago'
         },
         {
-          avatar: { url: 'img/avatars/4.jpg', status: '' },
+          avatar: { url: 'images/avatars/4.jpg', status: '' },
           user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2015' },
           country: { name: 'France', flag: 'cif-fr' },
           usage: { value: 98, period: 'Jun 11, 2015 - Jul 10, 2015' },
@@ -502,7 +518,7 @@ export default {
           activity: 'Last month'
         },
         {
-          avatar: { url: 'img/avatars/5.jpg', status: 'success' },
+          avatar: { url: 'images/avatars/5.jpg', status: 'success' },
           user: { name: 'Agapetus Tadeáš', new: true, registered: 'Jan 1, 2015' },
           country: { name: 'Spain', flag: 'cif-es' },
           usage: { value: 22, period: 'Jun 11, 2015 - Jul 10, 2015' },
@@ -510,7 +526,7 @@ export default {
           activity: 'Last week'
         },
         {
-          avatar: { url: 'img/avatars/6.jpg', status: 'danger' },
+          avatar: { url: 'images/avatars/6.jpg', status: 'danger' },
           user: { name: 'Friderik Dávid', new: true, registered: 'Jan 1, 2015' },
           country: { name: 'Poland', flag: 'cif-pl' },
           usage: { value: 43, period: 'Jun 11, 2015 - Jul 10, 2015' },

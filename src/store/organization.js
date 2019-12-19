@@ -1,20 +1,22 @@
 import axios from "axios";
 
 const moduleOrganzation = {
+  namespaced: true,
   state: {
-    organization: {},
+    organizations: [],
   },
   mutations: {
     setOrganization(state, payload) {
-      state.organization = payload;
+      state.organizations = payload;
     }
   },
   actions: {
-    async getOrganization({ commit, rootState}) {
+    getOrganization ({ commit, rootState}) {
+      console.log(rootState.auth.user.id);
       axios.get(`${process.env.VUE_APP_API_URL}/api/v1/organizations?filter[user_id]=${rootState.auth.user.id}`)
       .then(function(response) {
-        commit('setOrganization', response.data);
-        console.log(response);
+        console.log(response.data);
+        commit('setOrganization', response.data.data);
         return response;
       })
       .catch(function(error) {
