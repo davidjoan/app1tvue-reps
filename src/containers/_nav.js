@@ -13,6 +13,16 @@ export default [
         }
       },
       {
+        _name: 'CSidebarNavItem',
+        name: 'Clientes',
+        to: '/clients',
+        icon: 'cil-user',
+        badge: {
+          color: 'info',
+          text: 'INFO'
+        }
+      },
+      {
         _name: 'CSidebarNavTitle',
         _children: ['Theme']
       },

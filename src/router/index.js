@@ -60,6 +60,9 @@ const ForgotPassword = () => import(`@/views/auth/ForgotPassword`);
 const Users = () => import(`@/views/users/Users`);
 const User = () => import(`@/views/users/User`);
 
+// Users
+const Clients = () => import(`@/views/clients/Clients`);
+const Client = () => import(`@/views/clients/Client`);
 /*
 export default new Router({
   mode: `hash`, // https://router.vuejs.org/api/#mode
@@ -127,6 +130,27 @@ const routes = [
         path: `/widgets`,
         name: `Widgets`,
         component: Widgets
+      },
+      {
+        path: `/clients`,
+        meta: { label: "Clientes" },
+        component: {
+          render(c) {
+            return c("router-view");
+          }
+        },
+        children: [
+          {
+            path: "",
+            component: Clients
+          },
+          {
+            path: `:id`,
+            meta: { label: `Detalle Clientes` },
+            name: ``,
+            component: Client
+          }
+        ]
       },
       {
         path: `/users`,
