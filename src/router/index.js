@@ -134,11 +134,7 @@ const routes = [
       {
         path: `/clients`,
         meta: { label: "Clientes" },
-        component: {
-          render(c) {
-            return c("router-view");
-          }
-        },
+        component: Clients,
         children: [
           {
             path: "",
@@ -378,10 +374,9 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "hash",
-  base: process.env.BASE_URL,
-  linkActiveClass: `active`,
-  scrollBehavior: () => ({ y: 0 }),
+//  mode: "hash",
+//  linkActiveClass: `active`,
+//  scrollBehavior: () => ({ y: 0 }),
   routes
 });
 

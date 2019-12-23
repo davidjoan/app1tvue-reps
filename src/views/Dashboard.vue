@@ -479,7 +479,7 @@ export default {
     WidgetsBrand
   },
   computed: {
-    ...mapState('organization',['organizations'])
+    ...mapState('auth', ['organizations'])
   },
   data () {
     return {

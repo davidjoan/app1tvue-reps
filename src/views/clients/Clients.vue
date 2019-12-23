@@ -6,7 +6,7 @@
           <CCardHeader>
             Clientes
           </CCardHeader>
-          <CCardBody>
+          <CCardBody v-if="items">
             <CDataTable
               hover
               striped
@@ -18,16 +18,16 @@
               index-column
               clickable-rows
             >
-              <template #username="data">
+              <template #client_name="data">
                 <td>
-                  <strong>{{data.item.username}}</strong>
+                  <strong>{{data.item.client_name}}</strong>
                 </td>
               </template>
             
-              <template #status="data">
+              <template #brick="data">
                 <td>
-                  <CBadge :color="getBadge(data.item.status)">
-                    {{data.item.status}}
+                  <CBadge :color="success">
+                    {{data.item.brick}}
                   </CBadge>
                 </td>
               </template>
@@ -40,19 +40,21 @@
 </template>
 
 <script>
-import usersData from './UsersData'
+import { mapActions, mapState } from "vuex";
+import api from "../../store/api";
+
 export default {
-  name: 'Users',
+  name: 'Clients',
   data: () => {
     return {
-      items: usersData,
+      items: [],
       fields: [
-        { key: 'username', label: 'Name' },
-        { key: 'registered' },
-        { key: 'role' },
-        { key: 'status' }
+        { key: 'client_name', label: 'Cliente' },
+        { key: 'address', label: 'Dirección' },
+        { key: 'district', label: 'Distrito' },
+        { key: 'brick', label: 'Brick' }
       ],
-      perPage: 5,
+      perPage: 10,
     }
   },
   paginationProps: {
@@ -61,19 +63,38 @@ export default {
     previousButtonHtml: 'prev',
     nextButtonHtml: 'next'
   },
-  methods: {
-    getBadge (status) {
-      return status === 'Active' ? 'success'
-        : status === 'Inactive' ? 'secondary'
-          : status === 'Pending' ? 'warning'
-            : status === 'Banned' ? 'danger' : 'primary'
+  mounted () {
+    let self = this;
+    this.getTarget().then(function (response) {
+      console.log('paso');
+      console.log(response);
+      console.log(response.data.data);
+      self.items = response.data.data;
+      
+    });
+  },
+  computed: {
+    ...mapState('auth', ['target']),
+    ...mapState('auth', ['organization_selected'])
     },
+  methods: {
+    ...mapActions('auth', ['getTarget']),
     userLink (id) {
       return `users/${id.toString()}`
     },
     rowClicked (item, index) {
       const userLink = this.userLink(index + 1)
       this.$router.push({path: userLink})
+    },
+    fetchData(){
+         api.get(`target/${this.organization_selected.id}`)
+        .then(function(response) {
+          //commit('setTarget', response.data.data);
+          this.items =  response.data.data;
+        })
+        .catch(function(error) {
+          return error;
+        });
     }
   }
 }

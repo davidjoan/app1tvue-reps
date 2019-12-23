@@ -14,7 +14,7 @@
                 <CInput
                   placeholder="Correo electrónico"
                   autocomplete="username email"
-                  v-model="username"
+                  v-model="email"
                 >
                   <template #prepend-content>
                     <CIcon name="cil-user" />
@@ -35,7 +35,7 @@
                     <CButton
                       color="primary"
                       class="px-3"
-                      v-on:click="loginUser($data)"
+                      v-on:click="login"
                     >
                       Iniciar Sesión
                     </CButton>
@@ -67,7 +67,7 @@
               código SMS que te enviaremos a tu celular.
             </p>
             <CButton color="primary" class="active mt-3" to="/register" exact>
-              Regístrate Ahora {{ username }} !
+              Regístrate Ahora {{ email }} !
             </CButton>
           </CCard>
         </CCardGroup>
@@ -77,13 +77,13 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "Login",
   data: function() {
     return {
-      username: "davidtataje@gmail.com",
+      email: "davidtataje@gmail.com",
       password: "1234"
     };
   },
@@ -91,7 +91,11 @@ export default {
     ...mapState({ user: "auth/user", auth_message: "auth/auth_message" })
   },
   methods: {
-    ...mapActions({ loginUser: "auth/loginUser" })
+    login: function(){
+      this.$store.dispatch('auth/loginUser', {'email': this.email, 'password': this.password})
+       .finally(() => this.$router.push({ name: "Home" }))
+       .catch(err => console.log(err));
+    }
   }
 };
 </script>

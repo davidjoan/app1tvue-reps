@@ -8,7 +8,7 @@
     <template #toggler>
       <CHeaderNavLink>
         <div class="c-avatar">
-          <img v-bind:src="'images/avatars/' + user.id + '.jpg'"
+          <img v-bind:src="`images/avatars/${ user.id }.jpg`"
             class="c-avatar-img"
           />
         </div>
@@ -41,8 +41,9 @@
       <strong>Ajustes</strong>
     </CDropdownHeader>
     
-    <CDropdownItem v-for="organization in organizations" :key="organization.id">
-      <CIcon name="cil-user" /> Perfil {{ organization.name }}
+    <CDropdownItem v-for="organization in organizations" :key="organization.id" v-on:click="selectOrganization(organization)">
+      <CIcon name="cil-user" v-on:click="selectOrganization(organization)" /> Perfil {{ organization.name }}
+      <CBadge color="secondary" class="ml-auto" v-if="organization.id === organization_selected.id" >Selected</CBadge>
     </CDropdownItem>
     
     <CDropdownItem>
@@ -67,7 +68,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'TheHeaderDropdownAccnt',
@@ -77,11 +78,10 @@ export default {
     }
   },
   computed: {
-    ...mapState('auth',['user']),
-    ...mapState('organization',['organizations'])
+    ...mapState('auth', ['user','organizations','organization_selected'])
   },
   methods:{
-    ...mapActions('auth',['logoutUser']),
+    ...mapActions('auth', ['logoutUser', 'selectOrganization'])
   }
 }
 </script>
