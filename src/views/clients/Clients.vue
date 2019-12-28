@@ -1,12 +1,23 @@
 <template>
   <CRow>
-    <CCol col="12" xl="8">
+    <CCol col="sm" xl="12">
       <transition name="slide">
         <CCard>
           <CCardHeader>
             Clientes
           </CCardHeader>
           <CCardBody v-if="items">
+            <CNavbar light color="light">
+              <CForm inline>
+                <CInput class="mr-sm-2" placeholder="Buscar" size="sm" v-model="filter" />
+                <CButton
+                  color="outline-success"
+                  class="my-2 my-sm-0"
+                  type="button"
+                  v-on:click="searchMethod"
+                  >Buscar</CButton>
+              </CForm>
+            </CNavbar>
             <CDataTable
               hover
               striped
@@ -16,18 +27,17 @@
               @row-clicked="rowClicked"
               :pagination="$options.paginationProps"
               index-column
-              clickable-rows
-            >
+              clickable-rows>
               <template #client_name="data">
                 <td>
-                  <strong>{{data.item.client_name}}</strong>
+                  <strong>{{ data.item.client_name }}</strong>
                 </td>
               </template>
-            
+
               <template #brick="data">
                 <td>
-                  <CBadge :color="success">
-                    {{data.item.brick}}
+                  <CBadge :color="getBadge()">
+                    {{ data.item.brick }}
                   </CBadge>
                 </td>
               </template>
@@ -40,62 +50,58 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import api from "../../store/api";
+import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
-  name: 'Clients',
+  name: "Clients",
   data: () => {
     return {
       items: [],
+      filter: "",
       fields: [
-        { key: 'client_name', label: 'Cliente' },
-        { key: 'address', label: 'Dirección' },
-        { key: 'district', label: 'Distrito' },
-        { key: 'brick', label: 'Brick' }
+        { key: "client_name", label: "Cliente", sortable: true },
+        { key: "address", label: "Dirección", sortable: true },
+        { key: "district", label: "Distrito", sortable: true },
+        { key: "brick", label: "Brick", sortable: true }
       ],
-      perPage: 10,
-    }
+      perPage: 20
+    };
   },
   paginationProps: {
-    align: 'center',
+    align: "center",
     doubleArrows: false,
-    previousButtonHtml: 'prev',
-    nextButtonHtml: 'next'
+    previousButtonHtml: "prev",
+    nextButtonHtml: "next"
   },
-  mounted () {
+  mounted() {
     let self = this;
-    this.getTarget().then(function (response) {
-      console.log('paso');
-      console.log(response);
-      console.log(response.data.data);
+    this.getTarget().then(function(response) {
       self.items = response.data.data;
-      
     });
   },
   computed: {
-    ...mapState('auth', ['target']),
-    ...mapState('auth', ['organization_selected'])
-    },
+    ...mapState("auth", ["target_filter"]),
+  },
   methods: {
-    ...mapActions('auth', ['getTarget']),
-    userLink (id) {
-      return `users/${id.toString()}`
+    ...mapMutations("auth", ["setFilter"]),
+    ...mapActions("auth", ["getTarget"]),
+    userLink(id) {
+      return `/clients/${id.toString()}`;
     },
-    rowClicked (item, index) {
-      const userLink = this.userLink(index + 1)
-      this.$router.push({path: userLink})
+    rowClicked(item, index) {
+      const userLink = this.userLink(index + 1);
+      this.$router.push({ path: userLink });
     },
-    fetchData(){
-         api.get(`target/${this.organization_selected.id}`)
-        .then(function(response) {
-          //commit('setTarget', response.data.data);
-          this.items =  response.data.data;
-        })
-        .catch(function(error) {
-          return error;
-        });
+    getBadge() {
+      return "secondary";
+    },
+    searchMethod(){
+      this.setFilter(this.filter);
+      let self = this;
+      this.getTarget().then(function(response) {
+        self.items = response.data.data;
+      });
     }
   }
-}
+};
 </script>

@@ -10,7 +10,8 @@ const moduleAuth = {
     auth_message: "",
     organizations: [],
     organization_selected: {},
-    target: []
+    target: [],
+    target_filter: "all"
   },
   mutations: {
     auth_request(state) {
@@ -23,10 +24,6 @@ const moduleAuth = {
       state.organizations = payload.organizations;
       state.organization_selected = payload.organization_selected;
       state.auth_message = payload.message;
-
-      console.log('copied');
-      console.log(payload.user);
-      console.log(payload.message);
     },
     auth_error(state) {
       state.status = "error";
@@ -40,6 +37,9 @@ const moduleAuth = {
     },
     setTarget(state, payload) {
       state.target = payload;
+    },
+    setFilter(state, payload){
+      state.target_filter = payload;
     }
   },
   getters: {
@@ -70,7 +70,6 @@ const moduleAuth = {
 
             localStorage.setItem("token", token);
             api.defaults.headers.common["Authorization"] = token;
-            console.log(response);
             commit(
               "auth_success",{
               token,
@@ -91,23 +90,20 @@ const moduleAuth = {
     getTarget({ commit, state }){
 
       return new Promise((resolve, reject) => {
-        console.log('get target');
-        console.log(state.organization_selected);
-        api.get(`target/${state.organization_selected.id}`)
+        api.get(`target/${state.organization_selected.id}`,{
+          params: {
+            filter: state.target_filter
+          }
+        })
         .then(function(response) {
-          console.log(response);
           commit('setTarget', response.data.data);
           resolve(response);
         })
         .catch(err => {
           reject(err);
         });
-
       });
-
- 
     }
-
   },
   modules: {}
 };

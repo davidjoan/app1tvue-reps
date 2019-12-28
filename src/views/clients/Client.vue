@@ -23,16 +23,20 @@
 </template>
 
 <script>
-import usersData from './UsersData'
+import { mapState } from "vuex";
+
 export default {
-  name: 'User',
+  name: 'Client',
   fields: [
     { key: 'key', _style: 'width:150px' },
     { key: 'value' , _style: 'width:150px;' }
   ],
+  computed: {
+    ...mapState("auth", ["target"])
+  },
   methods: {
     getUserData (id) {
-      const user = usersData.find((user, index) => index + 1 == id)
+      const user = this.target.find((user, index) => index + 1 == id)
       const userDetails = user ? Object.entries(user) : [['id', 'Not found']]
       return userDetails.map(([key, value]) => { return { key, value } })
     },
