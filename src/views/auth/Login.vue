@@ -93,8 +93,7 @@ export default {
   methods: {
     login: function(){
       this.$store.dispatch('auth/loginUser', {'email': this.email, 'password': this.password})
-       .finally(() => this.$router.push({ name: "Home" }))
-       .catch(err => console.log(err));
+       .finally(() => this.$router.push({ name: "Home" }));
     }
   }
 };
