@@ -488,7 +488,7 @@ export default {
         {
           avatar: { url: 'images/avatars/1.jpg', status: 'success' },
           user: { name: 'Yiorgos Avraamu', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'USA', flag: 'cif-us' },
+          country: { name: 'Peru', flag: 'cif-pe' },
           usage: { value: 50, period: 'Jun 11, 2015 - Jul 10, 2015' },
           payment: { name: 'Mastercard', icon: 'cib-cc-mastercard' },
           activity: '10 sec ago'

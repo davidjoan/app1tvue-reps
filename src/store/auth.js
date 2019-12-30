@@ -11,7 +11,7 @@ const moduleAuth = {
     organizations: [],
     organization_selected: {},
     target: [],
-    target_filter: "all"
+    target_filter: ""
   },
   mutations: {
     auth_request(state) {
@@ -88,7 +88,6 @@ const moduleAuth = {
       });
     },
     getTarget({ commit, state }){
-
       return new Promise((resolve, reject) => {
         api.get(`target/${state.organization_selected.id}`,{
           params: {

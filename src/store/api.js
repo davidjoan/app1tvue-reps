@@ -8,7 +8,6 @@ axios.defaults.headers.common.Accept = 'application/json';
 
 const api = axios.create({
     baseURL: `${process.env.VUE_APP_API_URL}/api/v1`,
-    timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
       },
