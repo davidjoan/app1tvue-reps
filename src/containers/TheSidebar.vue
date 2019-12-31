@@ -5,9 +5,9 @@
     :show.sync="show"
   >
     <CSidebarBrand 
-      :imgFull="{ width: 118, height: 46, alt: 'Logo', src: 'images/brand/coreui-base-white.svg'}"
-      :imgMinimized="{ width: 118, height: 46, alt: 'Logo', src: 'images/brand/coreui-signet-white.svg'}"
-      :wrappedInLink="{ href: 'https://coreui.io/', target: '_blank'}"
+      :imgFull="{ width: 100, height: 38, alt: 'Logo', src: 'images/brand/coreui-base-white.svg'}"
+      :imgMinimized="{ width: 100, height: 38, alt: 'Logo', src: 'images/brand/coreui-signet-white.svg'}"
+      :wrappedInLink="{ href: '#/dashboard'}"
     />
     <CRenderFunction flat :content-to-render="nav"/>
     <CSidebarMinimizer

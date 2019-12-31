@@ -9,7 +9,16 @@
                 <CAlert show color="success" v-if="auth_message">
                   {{ auth_message }}
                 </CAlert>
-                <h1>Login App1t</h1>
+
+                <h2>
+                  <img
+                    class="mx-auto"
+                    src="/images/brand/coreui-base.svg"
+                    width="80"
+                    height="30"
+                    alt="App1t Logo"
+                  /><span>Login</span>
+                </h2>
                 <p class="text-muted">Ingresa con tu cuenta</p>
                 <CInput
                   placeholder="Correo electrónico"
@@ -32,11 +41,7 @@
                 </CInput>
                 <CRow>
                   <CCol col="6">
-                    <CButton
-                      color="primary"
-                      class="px-3"
-                      v-on:click="login"
-                    >
+                    <CButton color="primary" class="px-3" v-on:click="login">
                       Iniciar Sesión
                     </CButton>
                   </CCol>
@@ -91,9 +96,13 @@ export default {
     ...mapState({ user: "auth/user", auth_message: "auth/auth_message" })
   },
   methods: {
-    login: function(){
-      this.$store.dispatch('auth/loginUser', {'email': this.email, 'password': this.password})
-       .finally(() => this.$router.push({ name: "Home" }));
+    login: function() {
+      this.$store
+        .dispatch("auth/loginUser", {
+          email: this.email,
+          password: this.password
+        })
+        .finally(() => this.$router.push({ name: "Home" }));
     }
   }
 };

@@ -4,6 +4,7 @@
       <transition name="slide">
         <CCard>
           <CCardHeader>
+             <CIcon name="cil-address-book"/>
             Clientes
           </CCardHeader>
           <CCardBody v-if="items">
@@ -45,7 +46,7 @@
                     />
                     <span
                       class="c-avatar-status"
-                      :class="data.item.status_color"
+                      :class="`bg-${data.item.status_color || 'secondary'}`"
                     ></span>
                   </div>
                 </td>
@@ -110,7 +111,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   name: "Clients",
@@ -138,12 +139,10 @@ export default {
   },
   mounted() {
     let self = this;
+    this.setFilter(this.filter);
     this.getTarget().then(function(response) {
       self.items = response.data.data;
     });
-  },
-  computed: {
-    ...mapState("auth", ["target_filter"])
   },
   methods: {
     ...mapMutations("auth", ["setFilter"]),

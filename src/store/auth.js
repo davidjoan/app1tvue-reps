@@ -64,8 +64,7 @@ const moduleAuth = {
             const token = `Bearer ${response.data.data.success.token}`;
             const user = response.data.data.success.user;
             const organizations = response.data.data.success.organizations;
-            const organization_selected =
-              response.data.data.success.organization_selected;
+            const organization_selected = response.data.data.success.organization_selected;
             const message = response.data.message;
 
             localStorage.setItem("token", token);
@@ -95,7 +94,7 @@ const moduleAuth = {
           }
         })
         .then(function(response) {
-          commit('setTarget', response.data.data);
+          commit("setTarget", response.data.data);
           resolve(response);
         })
         .catch(err => {

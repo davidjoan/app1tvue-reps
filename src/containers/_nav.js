@@ -9,17 +9,17 @@ export default [
         icon: 'cil-speedometer',
         badge: {
           color: 'primary',
-          text: 'NEW'
+          text: 'NUEVO'
         }
       },
       {
         _name: 'CSidebarNavItem',
         name: 'Clientes',
         to: '/clients',
-        icon: 'cil-user',
+        icon: 'cil-address-book',
         badge: {
           color: 'info',
-          text: 'INFO'
+          text: 'NUEVO'
         }
       },
       {

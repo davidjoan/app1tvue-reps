@@ -87,7 +87,8 @@ import {
   cilRunning,
   cilVideo,
   cilPhone,
-  cilWarning
+  cilWarning,
+  cilAddressBook
 
 } from '@coreui/icons'
 
@@ -142,7 +143,8 @@ export const iconsSet = Object.assign(
     cilRunning,
     cilVideo,
     cilPhone,
-    cilWarning
+    cilWarning,
+    cilAddressBook
   },
   {
     cifPe,

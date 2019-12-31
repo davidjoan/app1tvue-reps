@@ -13,8 +13,8 @@
     <CHeaderBrand
       class="mx-auto d-lg-none" 
       src="/images/brand/coreui-base.svg"
-      width="97"
-      height="46"
+      width="100"
+      height="38"
       alt="CoreUI Logo"
     />
     <CHeaderNav class="d-md-down-none mr-auto">
